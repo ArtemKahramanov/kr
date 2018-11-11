@@ -1,0 +1,14 @@
+//main: style.scss
+.navbar{
+  width: 100%;
+  position: relative;
+  background: white;
+  z-index: 9999;
+  margin: 15px 0;
+
+  &__content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

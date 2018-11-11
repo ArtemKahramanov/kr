@@ -1,0 +1,15 @@
+//main: style.scss
+.lk{
+  display: flex;
+  margin-bottom: 25px;
+
+  &__left{
+    width: 25%;
+    margin-right: 15px;
+  }
+
+  &__right{
+    width: 75%;
+    margin-left: 15px;
+  }
+}

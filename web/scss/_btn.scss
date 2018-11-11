@@ -1,0 +1,35 @@
+//main: style.scss
+
+.btn{
+  border: 1px solid $red;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  padding: 8px 25px;
+  position: relative;
+  transition: all .3s linear 0s;
+  background: white;
+  color: $red;
+
+  &:hover{
+    color: white;
+    background: $red;
+  }
+
+  &--w100{
+    width: 100%;
+  }
+
+  &--w80{
+    width: 80%;
+  }
+  &--menu{
+    border: none;
+    padding: 0;
+    display: none;
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background: $red;
+  }
+}

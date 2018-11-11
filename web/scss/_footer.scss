@@ -1,0 +1,14 @@
+//main: style.scss
+
+.footer{
+  border-top: 3px solid $red;
+  background: #151515;
+  color: white;
+  padding: 15px 0;
+
+  &__row{
+    display: flex;
+    justify-content: space-between;
+    color: #969595;
+  }
+}
