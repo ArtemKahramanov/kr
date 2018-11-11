@@ -59,9 +59,13 @@ AppAsset::register($this);
 </div>
 </div>
 <footer class="footer">
-    <div class="container">
-        <p class="pull-left">Выполнил студент Группы ИС 15-2 Кахраманов Артём </p>
-        <p class="pull-right">&copy; Курсовая работа <?= date('Y')?> </p>
+    <div class="container footer__row">
+        <section class="soc">
+          <a href="https://vk.com/club3936162" target="_blank" class="soc__item"><img src="/img/vk.jpg" class="soc__img" alt="Соц Кнопка"> </a>
+          <a href="https://ru-ru.facebook.com/profkomlebgok17/" target="_blank" class="soc__item"><img src="/img/fb.jpg" class="soc__img" alt="Соц Кнопка"> </a>
+          <a href="https://ok.ru/lebedinskiygok" target="_blank" class="soc__item"><img src="/img/ok.png" class="soc__img" alt="Соц Кнопка"> </a>
+        </section>
+        <p class="pull-right">Проект создан для предприятия <a href="http://www.metalloinvest.com/business/mining-segment/lgok/" target="_blank"> ЛГОК </a> &copy; <?= date('Y')?> </p>
     </div>
 </footer>
 

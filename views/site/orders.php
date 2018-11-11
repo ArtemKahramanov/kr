@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
          ['attribute' => 'id', 'label'=>'Номер'],
          ['attribute' => 'name', 'label'=>'Название'],
-         ['attribute' => 'price_one','label' => 'Цена'],
+         ['attribute' => 'price_all','label' => 'Цена'],
          ['attribute' => 'kol','label' => 'Колличество'],
          ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
-         ['class' => 'yii\grid\ActionColumn']]
+       ]
   ]);
   ?>
 </div>

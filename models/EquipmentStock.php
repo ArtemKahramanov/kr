@@ -68,11 +68,13 @@ class EquipmentStock extends \yii\db\ActiveRecord
         return $this->hasOne(Organizer::className(), ['id' => 'organizer_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStocks()
+    public function getProvider()
     {
-        return $this->hasMany(Stock::className(), ['equipment_id' => 'id']);
+        return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
+    }
+
+    public function getStock()
+    {
+        return $this->hasOne(Stock::className(), ['equipment_id' => 'id']);
     }
 }

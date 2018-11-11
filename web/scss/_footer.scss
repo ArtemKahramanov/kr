@@ -9,6 +9,23 @@
   &__row{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #969595;
+  }
+  a{
+    color: #eb0000;
+  }
+  p{
+    margin-bottom: 0;
+  }
+  .soc{
+    display: flex;
+    &__item{
+        margin: 0 8px;
+    }
+    &__img{
+      width: 35px;
+      height: 35px;
+    }
   }
 }
