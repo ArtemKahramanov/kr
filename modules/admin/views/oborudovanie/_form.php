@@ -20,6 +20,8 @@ use app\models\Provider;
 
     <?= $form->field($model, 'organizer_id')->dropDownList(ArrayHelper::map(Organizer::find()->all(), 'id', 'name')) ?>
 
+    <?= $form->field($model, 'retired')->dropDownList(ArrayHelper::map($model::$retired, 'id', 'statys')) ?>
+
     <?= $form->field($model, 'provider_id')->dropDownList(ArrayHelper::map(Provider::find()->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'date_purchase')->widget(DatePicker::className(),

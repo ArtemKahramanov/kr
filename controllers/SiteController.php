@@ -13,6 +13,8 @@ use app\models\ContactForm;
 use app\models\EquipmentStock;
 use app\models\Orders;
 use app\models\Organizer;
+use app\models\Provider;
+use app\models\Stock;
 
 class SiteController extends Controller
 {
@@ -111,6 +113,48 @@ class SiteController extends Controller
         $query = $query->all();
 
         return $this->render('oborydovanie', [
+          'provider' => $provider,
+          'query' => $query,
+        ]);
+    }
+
+    public function actionProvider()
+    {
+        $query = Provider::find();
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+            'pageSize' => 7,
+          ],
+          'sort' => [
+            'defaultOrder'=>[]
+          ],
+        ]);
+
+        $query = $query->all();
+
+        return $this->render('provider', [
+          'provider' => $provider,
+          'query' => $query,
+        ]);
+    }
+
+    public function actionStock()
+    {
+        $query = Stock::find();
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+            'pageSize' => 7,
+          ],
+          'sort' => [
+            'defaultOrder'=>[]
+          ],
+        ]);
+
+        $query = $query->all();
+
+        return $this->render('stock', [
           'provider' => $provider,
           'query' => $query,
         ]);

@@ -20,6 +20,11 @@ use Yii;
  */
 class EquipmentStock extends \yii\db\ActiveRecord
 {
+
+    public static $retired = [
+      ['id'=>1, 'statys'=>'Нет'],
+      ['id'=>2, 'statys'=>'Да']
+    ];
     /**
      * {@inheritdoc}
      */
@@ -38,6 +43,7 @@ class EquipmentStock extends \yii\db\ActiveRecord
             [['organizer_id', 'provider_id', 'life', 'kol'], 'integer'],
             [['date_purchase', 'data_end'], 'default', 'value'=>('Y-m-d')],
             [['name'], 'string', 'max' => 255],
+            [['retired'], 'string', 'max' => 30],
             [['name'], 'unique'],
             [['organizer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organizer::className(), 'targetAttribute' => ['organizer_id' => 'id']],
         ];
@@ -55,8 +61,9 @@ class EquipmentStock extends \yii\db\ActiveRecord
             'provider_id' => 'Поставщик',
             'date_purchase' => 'Дата покупки',
             'life' => 'Срок службы',
+            'retired' => 'Списан',
             'data_end' => 'Дата окончания срока службы',
-            'kol' => 'Колличество',
+            'kol' => 'Кол-во',
         ];
     }
 

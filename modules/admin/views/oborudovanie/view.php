@@ -33,7 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'organizer_id',
             'date_purchase',
             'life',
-            'data_end',
+            // 'data_end',
+            'retired',
             'kol',
         ],
     ]) ?>
