@@ -9,13 +9,13 @@ use Yii;
  *
  * @property int $id
  * @property string $name
- * @property int $equipment_id
  * @property int $kol
  *
  * @property EquipmentStock $equipment
  */
 class Stock extends \yii\db\ActiveRecord
 {
+    public $equipmentCount;
     /**
      * {@inheritdoc}
      */
@@ -30,11 +30,10 @@ class Stock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'equipment_id', 'kol'], 'required'],
-            [['id', 'equipment_id', 'kol'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['id', 'name', 'kol'], 'required'],
+            [['id', 'kol'], 'integer'],
+            [['name', 'ed'], 'string', 'max' => 255],
             [['id'], 'unique'],
-            [['equipment_id'], 'exist', 'skipOnError' => true, 'targetClass' => EquipmentStock::className(), 'targetAttribute' => ['equipment_id' => 'id']],
         ];
     }
 
@@ -45,17 +44,23 @@ class Stock extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'equipment_id' => 'Equipment ID',
-            'kol' => 'Kol',
+            'name' => 'Название',
+            'ed' => 'Единица измерения',
+            'kol' => 'Кол-во',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEquipment()
-    {
-        return $this->hasOne(EquipmentStock::className(), ['id' => 'equipment_id']);
+    public function getEquipmentStock(){
+        return $this->hasMany(EquipmentStock::className(), ['stock_id'=>'id']);
     }
+
+    public function getEquipmentCount($model){
+        $oborudovanie = EquipmentStock::find()->where(['stock_id' => $model->id])->count();
+        if($oborudovanie < $model->kol){
+            return "Необходимо докупить " . ($model->kol - $oborudovanie) . ' товара(ов)';
+        }else{
+            return "В наличии";
+        }
+    }
+
 }

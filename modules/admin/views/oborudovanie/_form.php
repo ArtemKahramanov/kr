@@ -6,6 +6,7 @@ use yii\jui\DatePicker;
 use \yii\helpers\ArrayHelper;
 use app\models\Organizer;
 use app\models\Provider;
+use app\models\Stock;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EquipmentStock */
@@ -24,18 +25,20 @@ use app\models\Provider;
 
     <?= $form->field($model, 'provider_id')->dropDownList(ArrayHelper::map(Provider::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($model, 'date_purchase')->widget(DatePicker::className(),
-        ['clientOptions' =>[
-         'htmlOptions'=>[
-         'style'=>'width:80px;',
-         'font-weight'=>'x-small',
-         ],]]) ?>
+    <?= $form->field($model, 'date_purchase')->widget(DatePicker::className(), [
+        'attribute' => 'from_date',
+        'language' => 'ru',
+        'dateFormat' => 'yyyy-MM-dd',
+
+    ]) ?>
 
     <?= $form->field($model, 'life')->textInput() ?>
 
-    <?= $form->field($model, 'data_end')->textInput() ?>
+<!--    --><?//= $form->field($model, 'data_end')->textInput() ?>
 
-    <?= $form->field($model, 'kol')->textInput() ?>
+<!--    --><?//= $form->field($model, 'kol')->textInput() ?>
+
+    <?= $form->field($model, 'stock_id')->dropDownList(ArrayHelper::map(Stock::find()->all(), 'id', 'name')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

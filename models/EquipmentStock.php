@@ -20,6 +20,7 @@ use Yii;
  */
 class EquipmentStock extends \yii\db\ActiveRecord
 {
+    public $data_end;
 
     public static $retired = [
       ['id'=>1, 'statys'=>'Нет'],
@@ -39,10 +40,11 @@ class EquipmentStock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'organizer_id', 'date_purchase', 'life', 'data_end', 'kol'], 'required'],
+            [['name', 'organizer_id', 'date_purchase', 'life', 'kol'], 'required'],
             [['organizer_id', 'provider_id', 'life', 'kol'], 'integer'],
             [['date_purchase', 'data_end'], 'default', 'value'=>('Y-m-d')],
             [['name'], 'string', 'max' => 255],
+            [['stock_id'], 'integer'],
             [['retired'], 'string', 'max' => 30],
             [['name'], 'unique'],
             [['organizer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organizer::className(), 'targetAttribute' => ['organizer_id' => 'id']],
@@ -64,6 +66,7 @@ class EquipmentStock extends \yii\db\ActiveRecord
             'retired' => 'Списан',
             'data_end' => 'Дата окончания срока службы',
             'kol' => 'Кол-во',
+            'stock_id' => 'Склад',
         ];
     }
 
@@ -82,6 +85,16 @@ class EquipmentStock extends \yii\db\ActiveRecord
 
     public function getStock()
     {
-        return $this->hasOne(Stock::className(), ['equipment_id' => 'id']);
+        return $this->hasOne(Stock::className(), ['id' => 'stock_id']);
+    }
+//
+//    public function getEqCoaunt(){
+//        if ()
+//    }
+
+    public function getDate_end(){
+        $date = strtotime("+" .$this->life ."day", strtotime($this->date_purchase));
+        $date_end = date("Y-m-d", $date);
+        return $date_end;
     }
 }

@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
          ['attribute' => 'id', 'label'=>'Номер'],
          ['attribute' => 'name', 'label'=>'Название'],
-         ['attribute' => 'price_all','label' => 'Цена'],
+        ['attribute' => 'price_one','label' => 'Цена за единицу', 'value' => function($model){return $model->price_one . ' Руб.';}],
+        ['attribute' => 'price_all','label' => 'Итого', 'value' => function($model){return $model->price_all . ' Руб.';}],
          ['attribute' => 'kol','label' => 'Колличество'],
          ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
        ]

@@ -16,12 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
   'columns' => [
        ['attribute' => 'name', 'label'=>'Название'],
        ['attribute' => 'date_purchase', 'label'=>'Дата покупки'],
-       ['attribute' => 'life', 'label'=>'Срок службы'],
+       ['attribute' => 'life', 'label'=>'Срок службы', 'value' => function($model){return $model->life . ' дней';}],
        ['attribute' => 'retired', 'label'=>'Списанно'],
+       ['attribute' => 'date_end', 'label'=>'Дата списания', 'value'=>'date_end'],
        ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
        ['attribute' => 'provider_name','label' => 'Провайдер', 'value'=>'provider.name'],
        ['attribute' => 'stock_name','label' => 'Поставщик', 'value'=>'stock.name'],
-       ]
+  ]
 ]);
 ?>
 </div>

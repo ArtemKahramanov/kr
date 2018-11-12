@@ -21,7 +21,7 @@ class m181030_134915_create_menu_table extends Migration
             'type' => $this->string(155),
             'role' => $this->string(2),
             'method' => $this->integer()->defaultValue(0),
-            'class' => $this->string('')
+            'class' => $this->string(255)
         ]);
     }
 
