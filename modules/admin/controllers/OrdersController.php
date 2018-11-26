@@ -4,10 +4,13 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Orders;
+use app\models\CatalogOborudovania;
+use app\models\Organizer;
 use app\models\OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -73,6 +76,44 @@ class OrdersController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCatalogOborudovania($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('CatalogOborudovania')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => CatalogOborudovania::find($id)->name];
+        }
+        return $out;
+    }
+
+    public function actionOrganizer($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('organizer')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Organizer::find($id)->name];
+        }
+        return $out;
     }
 
     /**

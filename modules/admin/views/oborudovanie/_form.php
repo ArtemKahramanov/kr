@@ -2,43 +2,67 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\jui\DatePicker;
-use \yii\helpers\ArrayHelper;
-use app\models\Organizer;
-use app\models\Provider;
-use app\models\Stock;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
+$url = \yii\helpers\Url::to(['catalog']);
+$url_cab = \yii\helpers\Url::to(['cabinet']);
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EquipmentStock */
+/* @var $model app\models\Oborudovanie */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="equipment-stock-form">
+<div class="oborudovanie-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'organizer_id')->dropDownList(ArrayHelper::map(Organizer::find()->all(), 'id', 'name')) ?>
+    <?php
+    echo $form->field($model, 'catalog_oborudovania_id')->widget(Select2::classname(), [
+        'initValueText' => 'Выберите оборудование', // set the initial display text
+        'options' => ['placeholder' => 'Поиск ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(city) { return city.text; }'),
+            'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'retired')->dropDownList(ArrayHelper::map($model::$retired, 'id', 'statys')) ?>
+    <?php
+    echo $form->field($model, 'cabinet_id')->widget(Select2::classname(), [
+        'initValueText' => 'Выберите кабинет', // set the initial display text
+        'options' => ['placeholder' => 'Поиск ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 0,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url_cab,
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(city) { return city.text; }'),
+            'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'provider_id')->dropDownList(ArrayHelper::map(Provider::find()->all(), 'id', 'name')) ?>
-
-    <?= $form->field($model, 'date_purchase')->widget(DatePicker::className(), [
-        'attribute' => 'from_date',
-        'language' => 'ru',
-        'dateFormat' => 'yyyy-MM-dd',
-
-    ]) ?>
-
-    <?= $form->field($model, 'life')->textInput() ?>
-
-<!--    --><?//= $form->field($model, 'data_end')->textInput() ?>
-
-<!--    --><?//= $form->field($model, 'kol')->textInput() ?>
-
-    <?= $form->field($model, 'stock_id')->dropDownList(ArrayHelper::map(Stock::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'start_operation')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

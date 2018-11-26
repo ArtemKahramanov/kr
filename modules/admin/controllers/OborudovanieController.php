@@ -3,14 +3,17 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\EquipmentStock;
-use app\models\EquipmentStockSearch;
+use app\models\Oborudovanie;
+use app\models\OborudovanieSearch;
+use yii\db\Query;
+use app\models\Cabinet;
+use app\models\CatalogOborudovania;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EquipmentStockController implements the CRUD actions for EquipmentStock model.
+ * OborudovanieController implements the CRUD actions for Oborudovanie model.
  */
 class OborudovanieController extends Controller
 {
@@ -30,12 +33,12 @@ class OborudovanieController extends Controller
     }
 
     /**
-     * Lists all EquipmentStock models.
+     * Lists all Oborudovanie models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EquipmentStockSearch();
+        $searchModel = new OborudovanieSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +48,7 @@ class OborudovanieController extends Controller
     }
 
     /**
-     * Displays a single EquipmentStock model.
+     * Displays a single Oborudovanie model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +61,13 @@ class OborudovanieController extends Controller
     }
 
     /**
-     * Creates a new EquipmentStock model.
+     * Creates a new Oborudovanie model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EquipmentStock();
+        $model = new Oborudovanie();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +79,7 @@ class OborudovanieController extends Controller
     }
 
     /**
-     * Updates an existing EquipmentStock model.
+     * Updates an existing Oborudovanie model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,8 +98,19 @@ class OborudovanieController extends Controller
         ]);
     }
 
+    public function actionWriteOff($id){
+        $model = Oborudovanie::findOne($id);
+        $date = date('Y-m-d');
+        $model->retired = $date;
+        if($model->save()) {
+            return $this->redirect('index');
+        }else{
+            var_dump($model->getErrors()); die;
+        }
+    }
+
     /**
-     * Deletes an existing EquipmentStock model.
+     * Deletes an existing Oborudovanie model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,16 +123,54 @@ class OborudovanieController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionCatalog($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('catalog_oborudovania')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => CatalogOborudovania::find($id)->name];
+        }
+        return $out;
+    }
+
+    public function actionCabinet($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('cabinet')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Cabinet::find($id)->name];
+        }
+        return $out;
+    }
+
     /**
-     * Finds the EquipmentStock model based on its primary key value.
+     * Finds the Oborudovanie model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return EquipmentStock the loaded model
+     * @return Oborudovanie the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EquipmentStock::findOne($id)) !== null) {
+        if (($model = Oborudovanie::findOne($id)) !== null) {
             return $model;
         }
 

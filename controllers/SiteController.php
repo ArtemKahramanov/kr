@@ -2,19 +2,21 @@
 
 namespace app\controllers;
 
+use app\models\Location;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\EquipmentStock;
+use app\models\Oborudovanie;
 use app\models\Orders;
 use app\models\Organizer;
 use app\models\Provider;
-use app\models\Stock;
+use app\models\Cabinet;
+use app\models\Groups;
+
 
 class SiteController extends Controller
 {
@@ -97,24 +99,88 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionOborydovanie()
+    public function actionGroups()
     {
-        $query = EquipmentStock::find();
+        $query = Groups::find();
         $provider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 7,
-          ],
-          'sort' => [
-            'defaultOrder'=>[]
-          ],
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder'=>[]
+            ],
         ]);
 
         $query = $query->all();
 
-        return $this->render('oborydovanie', [
-          'provider' => $provider,
-          'query' => $query,
+        return $this->render('groups', [
+            'provider' => $provider,
+            'query' => $query,
+        ]);
+    }
+
+    public function actionOborudovanie()
+    {
+        $query = Oborudovanie::find();
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder'=>[]
+            ],
+        ]);
+
+        $query = $query->all();
+
+        return $this->render('oborudovanie', [
+            'provider' => $provider,
+            'query' => $query,
+        ]);
+    }
+
+
+    public function actionLocation()
+    {
+        $query = Location::find();
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder'=>[]
+            ],
+        ]);
+
+        $query = $query->all();
+
+        return $this->render('location', [
+            'provider' => $provider,
+            'query' => $query,
+        ]);
+    }
+
+    public function actionCabinet()
+    {
+        $query = Cabinet::find();
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder'=>[]
+            ],
+        ]);
+
+        $query = $query->all();
+
+        return $this->render('cabinet', [
+            'provider' => $provider,
+            'query' => $query,
         ]);
     }
 
@@ -134,27 +200,6 @@ class SiteController extends Controller
         $query = $query->all();
 
         return $this->render('provider', [
-          'provider' => $provider,
-          'query' => $query,
-        ]);
-    }
-
-    public function actionStock()
-    {
-        $query = Stock::find();
-        $provider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 7,
-          ],
-          'sort' => [
-            'defaultOrder'=>[]
-          ],
-        ]);
-
-        $query = $query->all();
-
-        return $this->render('stock', [
           'provider' => $provider,
           'query' => $query,
         ]);

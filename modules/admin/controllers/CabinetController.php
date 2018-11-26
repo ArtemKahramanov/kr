@@ -3,16 +3,16 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\Stock;
-use app\models\StockSearch;
+use app\models\Cabinet;
+use app\models\CabinetSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StockController implements the CRUD actions for Stock model.
+ * CabinetController implements the CRUD actions for Cabinet model.
  */
-class StockController extends Controller
+class CabinetController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class StockController extends Controller
     }
 
     /**
-     * Lists all Stock models.
+     * Lists all Cabinet models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StockSearch();
+        $searchModel = new CabinetSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class StockController extends Controller
     }
 
     /**
-     * Displays a single Stock model.
+     * Displays a single Cabinet model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class StockController extends Controller
     }
 
     /**
-     * Creates a new Stock model.
+     * Creates a new Cabinet model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Stock();
+        $model = new Cabinet();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class StockController extends Controller
     }
 
     /**
-     * Updates an existing Stock model.
+     * Updates an existing Cabinet model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class StockController extends Controller
     }
 
     /**
-     * Deletes an existing Stock model.
+     * Deletes an existing Cabinet model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class StockController extends Controller
     }
 
     /**
-     * Finds the Stock model based on its primary key value.
+     * Finds the Cabinet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Stock the loaded model
+     * @return Cabinet the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Stock::findOne($id)) !== null) {
+        if (($model = Cabinet::findOne($id)) !== null) {
             return $model;
         }
 

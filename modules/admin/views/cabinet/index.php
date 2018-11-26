@@ -1,0 +1,32 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\CabinetSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Кабинеты';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="cabinet-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Добавить кабинет', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            'name',
+            ['attribute' => 'location_id', 'label' => 'Расположение', 'value' => 'location.name'],
+//            ['attribute' => 'orders_id', 'label' => 'Заказы', 'value' => 'orders.name'],
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+</div>

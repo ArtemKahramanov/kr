@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\EquipmentStock;
+use app\models\CatalogOborudovania;
 
 /**
- * EquipmentStockSearch represents the model behind the search form of `app\models\EquipmentStock`.
+ * CatalogOborudovaniaSearch represents the model behind the search form of `app\models\CatalogOborudovania`.
  */
-class EquipmentStockSearch extends EquipmentStock
+class CatalogOborudovaniaSearch extends CatalogOborudovania
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class EquipmentStockSearch extends EquipmentStock
     public function rules()
     {
         return [
-            [['id', 'organizer_id', 'life', 'kol'], 'integer'],
-            [['name', 'date_purchase', 'data_end'], 'safe'],
+            [['id', 'groups_id'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EquipmentStockSearch extends EquipmentStock
      */
     public function search($params)
     {
-        $query = EquipmentStock::find();
+        $query = CatalogOborudovania::find();
 
         // add conditions that should always apply here
 
@@ -60,11 +60,7 @@ class EquipmentStockSearch extends EquipmentStock
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'organizer_id' => $this->organizer_id,
-            'date_purchase' => $this->date_purchase,
-            'life' => $this->life,
-            'data_end' => $this->data_end,
-            'kol' => $this->kol,
+            'groups_id' => $this->groups_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

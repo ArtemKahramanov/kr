@@ -18,8 +18,7 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['id', 'organizer_id', 'price_one', 'kol', 'price_all'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'catalog_oborudovania_id', 'price_one', 'kol', 'organizer_id'], 'integer'],
         ];
     }
 
@@ -60,13 +59,11 @@ class OrdersSearch extends Orders
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'organizer_id' => $this->organizer_id,
+            'catalog_oborudovania_id' => $this->catalog_oborudovania_id,
             'price_one' => $this->price_one,
             'kol' => $this->kol,
-            'price_all' => $this->price_all,
+            'organizer_id' => $this->organizer_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

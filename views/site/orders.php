@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $provider,
     'columns' => [
          ['attribute' => 'id', 'label'=>'Номер'],
-         ['attribute' => 'name', 'label'=>'Название'],
         ['attribute' => 'price_one','label' => 'Цена за единицу', 'value' => function($model){return $model->price_one . ' Руб.';}],
-        ['attribute' => 'price_all','label' => 'Итого', 'value' => function($model){return $model->price_all . ' Руб.';}],
+//        ['attribute' => 'price_all','label' => 'Итого', 'value' => function($model){return $model->price_all . ' Руб.';}],
          ['attribute' => 'kol','label' => 'Колличество'],
-         ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
+        ['attribute' => 'catalog_oborudovania_id','label' => 'Каталог оборудования', 'value'=>'catalogOborudovania.name'],
+        ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
        ]
   ]);
   ?>

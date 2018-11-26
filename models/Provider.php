@@ -8,7 +8,11 @@ use Yii;
  * This is the model class for table "provider".
  *
  * @property int $id
- * @property int $name
+ * @property string $name
+ *
+ * @property Groups[] $groups
+ * @property ProviderGroups[] $providerGroups
+ * @property Groups[] $groups0
  */
 class Provider extends \yii\db\ActiveRecord
 {
@@ -27,7 +31,7 @@ class Provider extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,5 +44,29 @@ class Provider extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(Groups::className(), ['provider_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProviderGroups()
+    {
+        return $this->hasMany(ProviderGroups::className(), ['provider_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups0()
+    {
+        return $this->hasMany(Groups::className(), ['id' => 'groups_id'])->viaTable('provider_groups', ['provider_id' => 'id']);
     }
 }

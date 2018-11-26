@@ -4,34 +4,32 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EquipmentStockSearch */
+/* @var $model app\models\OborudovanieSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="equipment-stock-search">
+<div class="oborudovanie-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'catalog_oborudovania_id') ?>
 
-    <?= $form->field($model, 'name') ?>
+<!--    --><?//= $form->field($model, 'number') ?>
 
-    <?= $form->field($model, 'organizer_id') ?>
+<!--    --><?//= $form->field($model, 'retired') ?>
 
-    <?= $form->field($model, 'date_purchase') ?>
+    <?= $form->field($model, 'cabinet_id') ?>
 
-    <?= $form->field($model, 'life') ?>
-
-    <?php // echo $form->field($model, 'data_end') ?>
-
-    <?php // echo $form->field($model, 'kol') ?>
+    <?= $form->field($model, 'retired')->checkbox([
+        'template' => '<div class="col-md-1">{label}</div><div class="col-md-5">{input}</div><div class="col-md-6">{error}</div>'
+    ])?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Очистить', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

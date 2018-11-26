@@ -17,15 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'organizer_id') ?>
+    <?= $form->field($model, 'catalog_oborudovania_id') ?>
 
     <?= $form->field($model, 'price_one') ?>
 
     <?= $form->field($model, 'kol') ?>
 
-    <?php // echo $form->field($model, 'price_all') ?>
+    <?= $form->field($model, 'organizer_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

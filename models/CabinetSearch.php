@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Stock;
+use app\models\Cabinet;
 
 /**
- * StockSearch represents the model behind the search form of `app\models\Stock`.
+ * CabinetSearch represents the model behind the search form of `app\models\Cabinet`.
  */
-class StockSearch extends Stock
+class CabinetSearch extends Cabinet
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class StockSearch extends Stock
     public function rules()
     {
         return [
-            [['id', 'kol'], 'integer'],
+            [['id', 'location_id', 'orders_id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class StockSearch extends Stock
      */
     public function search($params)
     {
-        $query = Stock::find();
+        $query = Cabinet::find();
 
         // add conditions that should always apply here
 
@@ -60,7 +60,8 @@ class StockSearch extends Stock
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'kol' => $this->kol,
+            'location_id' => $this->location_id,
+            'orders_id' => $this->orders_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

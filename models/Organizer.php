@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $name
  *
- * @property EquipmentStock[] $equipmentStocks
+ * @property Groups[] $groups
  */
 class Organizer extends \yii\db\ActiveRecord
 {
@@ -47,8 +47,8 @@ class Organizer extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEquipmentStocks()
+    public function getGroups()
     {
-        return $this->hasMany(EquipmentStock::className(), ['organizer_id' => 'id']);
+        return $this->hasMany(Groups::className(), ['organizer_id' => 'id']);
     }
 }
