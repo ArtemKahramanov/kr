@@ -29,6 +29,7 @@ class Location extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            ['name', 'unique'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -39,8 +40,8 @@ class Location extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'Номер',
+            'name' => 'Название',
         ];
     }
 

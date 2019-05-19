@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Organizer;
+use app\models\NewOrder;
 
 /**
- * OrganizerSearch represents the model behind the search form of `app\models\Organizer`.
+ * NewOrderSearch represents the model behind the search form of `app\models\NewOrder`.
  */
-class OrganizerSearch extends Organizer
+class NewOrderSearch extends NewOrder
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class OrganizerSearch extends Organizer
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'date_dismissal'], 'safe'],
+            [['id', 'catalog_oborudovania_id', 'kol'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class OrganizerSearch extends Organizer
      */
     public function search($params)
     {
-        $query = Organizer::find();
+        $query = NewOrder::find();
 
         // add conditions that should always apply here
 
@@ -57,13 +57,11 @@ class OrganizerSearch extends Organizer
             return $dataProvider;
         }
 
-        if($this->date_dismissal == 1){
-            $query->andWhere(['is not', 'date_dismissal', null]);
-        }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'catalog_oborudovania_id' => $this->catalog_oborudovania_id,
+            'kol' => $this->kol,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

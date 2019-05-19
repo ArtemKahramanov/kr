@@ -26,6 +26,11 @@ $config = [
         ],
         'db' => $db,
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+        ],
+    ],
     'params' => $params,
     /*
     'controllerMap' => [

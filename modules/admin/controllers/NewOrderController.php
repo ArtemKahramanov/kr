@@ -3,16 +3,16 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\Groups;
-use app\models\GroupsSearch;
+use app\models\NewOrder;
+use app\models\NewOrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GroupsController implements the CRUD actions for Groups model.
+ * NewOrderController implements the CRUD actions for NewOrder model.
  */
-class GroupsController extends AdminController
+class NewOrderController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Lists all Groups models.
+     * Lists all NewOrder models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GroupsSearch();
+        $searchModel = new NewOrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Displays a single Groups model.
+     * Displays a single NewOrder model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Creates a new Groups model.
+     * Creates a new NewOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Groups();
+        $model = new NewOrder();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Updates an existing Groups model.
+     * Updates an existing NewOrder model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Deletes an existing Groups model.
+     * Deletes an existing NewOrder model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class GroupsController extends AdminController
     }
 
     /**
-     * Finds the Groups model based on its primary key value.
+     * Finds the NewOrder model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Groups the loaded model
+     * @return NewOrder the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Groups::findOne($id)) !== null) {
+        if (($model = NewOrder::findOne($id)) !== null) {
             return $model;
         }
 

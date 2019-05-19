@@ -15,7 +15,7 @@ use yii\web\Controller;
 /**
  * Default controller for the `admin` module
  */
-class FillController extends Controller
+class FillController extends AdminController
 {
     /**
      * Renders the index view for the module

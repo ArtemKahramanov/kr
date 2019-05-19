@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 /**
  * OborudovanieController implements the CRUD actions for Oborudovanie model.
  */
-class OborudovanieController extends Controller
+class OborudovanieController extends AdminController
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,6 @@ class OborudovanieController extends Controller
     {
         $searchModel = new OborudovanieSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

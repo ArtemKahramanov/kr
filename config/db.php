@@ -7,3 +7,10 @@ return [
     'password' => '1234',
     'charset' => 'utf8',
 ];
+//return [
+//    'class' => 'yii\db\Connection',
+//    'dsn' => 'mysql:host=195.88.208.124;dbname=artemk_db',
+//    'username' => 'artemk_user',
+//    'password' => 'artemk7777',
+//    'charset' => 'utf8',
+//];

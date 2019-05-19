@@ -6,7 +6,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProviderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$buttons = ['class' => 'yii\grid\ActionColumn',
+    'template' => '{view} {update}',
+];
 $this->title = 'Поставщики';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            $buttons
         ],
     ]); ?>
 </div>

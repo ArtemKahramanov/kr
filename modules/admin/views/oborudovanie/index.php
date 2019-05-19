@@ -1,6 +1,6 @@
 <style>
     .retired {
-        color: red;
+        color: #ff0e29;
     }
 </style>
 <?php
@@ -8,6 +8,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use app\models\CatalogOborudovania;
+use app\models\Cabinet;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OborudovanieSearch */
@@ -15,9 +18,13 @@ use yii\helpers\Url;
 
 // Заполнение GridView
 $column = [
-    ['attribute' => 'catalog_oborudovania_id', 'label' => 'Категория', 'value' => 'catalogOborudovania.name'],
+    ['attribute' => 'catalog_oborudovania_id', 'label' => 'Категория', 'value' => 'catalogOborudovania.name',
+        'filter' => ArrayHelper::map(CatalogOborudovania::find()->all(), 'id', 'name')
+    ],
     'number',
-    ['attribute' => 'cabinet_id', 'label' => 'Кабинет', 'value' => 'cabinet.name'],
+    ['attribute' => 'cabinet_id', 'label' => 'Кабинет', 'value' => 'cabinet.name',
+        'filter' => ArrayHelper::map(Cabinet::find()->all(), 'id', 'name')
+    ],
 ];
 $life = [
     ['attribute' => 'life', 'label' => 'Срок службы', 'value' => 'catalogOborudovania.life'],
@@ -25,7 +32,7 @@ $life = [
 $retired = [
     ['attribute' => 'retired', 'label' => 'Дата списания', 'value' => 'retired'],
 ];
-
+// Кнопка Списать
 $write_off = [
     'class' => \yii\grid\ActionColumn::class,
 
@@ -74,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => $column,
-        // Выделить оборудование, срок службы которых подходит к концу
+        // Выделение оборудования, срок службы которых подошел к концу
         'rowOptions' => function ($model, $key, $index, $grid) {
             if ((date('Y-m-d') >= $model->date_end) && $model->retired == null) {
                 return ['class' => 'retired'];

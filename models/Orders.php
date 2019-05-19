@@ -40,6 +40,7 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Название',
             'catalog_oborudovania_id' => 'Каталог оборудования',
             'price_one' => 'Цена за единицу',
             'kol' => 'Кол-во',

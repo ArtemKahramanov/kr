@@ -4,30 +4,33 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\LocationSearch */
+/* @var $searchModel app\models\NewOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$buttons = ['class' => 'yii\grid\ActionColumn',
-    'template' => '{view} {update}',
-    ];
-$this->title = 'Цехи';
+
+$this->title = 'New Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="location-index">
+<div class="new-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create New Order', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'name',
+            ['class' => 'yii\grid\SerialColumn'],
 
-            $buttons
+            'id',
+            'name',
+            'catalog_oborudovania_id',
+            'kol',
+
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 /**
  * OborudovanieController implements the CRUD actions for Oborudovanie model.
  */
-class OborudovanieStockController extends Controller
+class OborudovanieStockController extends AdminController
 {
     public $stock = true;
     /**

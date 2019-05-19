@@ -2,7 +2,9 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Location;
 use Yii;
+use yii\db\Query;
 use app\models\Cabinet;
 use app\models\CabinetSearch;
 use yii\web\Controller;
@@ -12,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * CabinetController implements the CRUD actions for Cabinet model.
  */
-class CabinetController extends Controller
+class CabinetController extends AdminController
 {
     /**
      * {@inheritdoc}
@@ -107,6 +109,25 @@ class CabinetController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionLocation($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('location')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Location::find($id)->name];
+        }
+        return $out;
     }
 
     /**

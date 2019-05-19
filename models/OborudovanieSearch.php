@@ -21,8 +21,8 @@ class OborudovanieSearch extends Oborudovanie
     public function rules()
     {
         return [
-            [['id', 'catalog_oborudovania_id', 'cabinet_id'], 'integer'],
-            [['number', 'status', 'retired'], 'safe'],
+            [['catalog_oborudovania_id', 'cabinet_id'], 'integer'],
+            [['status', 'retired'], 'safe'],
         ];
     }
 
@@ -68,12 +68,11 @@ class OborudovanieSearch extends Oborudovanie
         if($this->status !== 'off') {
             $query->andWhere(['retired' => null]);
         }else{
-            // Списанное оборудование
+        // Списанное оборудование
             $query->andWhere(['!=', 'retired', 0]);
         }
 
         $select_date_end = 'DATE_ADD(start_operation, INTERVAL catalog_oborudovania.life DAY)';
-        $query->innerJoinWith('catalogOborudovania')->addSelect(['*', $select_date_end . ' as date_end']);
 
         // Поиск оборудования которое пора списывать
         $now = date('Y-m-d');
@@ -83,13 +82,17 @@ class OborudovanieSearch extends Oborudovanie
             $query->orderBy('date_end');
         }
 
+        // Списанное оборудование
         if($this->status == 'off'){
             $query->andWhere(['!=', 'retired', 0]);
+        }else{
+        // Оборудование в ниличии
+            $query->select(['oborudovanie.*']);
+            $query->innerJoinWith('catalogOborudovania');
+            $query->addSelect([$select_date_end . ' as date_end']);
         }
 
-
         $query->andFilterWhere(['like', 'number', $this->number]);
-
 
         return $dataProvider;
     }

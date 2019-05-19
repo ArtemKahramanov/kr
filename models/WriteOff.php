@@ -5,24 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "cabinet".
+ * This is the model class for table "write_off".
  *
  * @property int $id
  * @property string $name
+ * @property int $cabinet_id
  * @property int $location_id
- * @property int $orders_id
+ * @property int $oborudovanie_id
  *
+ * @property Cabinet $cabinet
  * @property Location $location
- * @property Oborudovanie[] $Oborudovanies
  */
-class Cabinet extends \yii\db\ActiveRecord
+class WriteOff extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'cabinet';
+        return 'write_off';
     }
 
     /**
@@ -31,9 +32,10 @@ class Cabinet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'location_id', 'orders_id'], 'required'],
-            [['location_id', 'orders_id'], 'integer'],
+            [['name', 'cabinet_id', 'location_id', 'oborudovanie_id'], 'required'],
+            [['cabinet_id', 'location_id', 'oborudovanie_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['cabinet_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cabinet::className(), 'targetAttribute' => ['cabinet_id' => 'id']],
             [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
         ];
     }
@@ -45,16 +47,20 @@ class Cabinet extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
-            'location_id' => 'Расположение',
-            'orders_id' => 'Номер заказа',
+            'name' => 'Name',
+            'cabinet_id' => 'Cabinet ID',
+            'location_id' => 'Location ID',
+            'oborudovanie_id' => 'Oborudovanie ID',
         ];
     }
 
-//    public function getOrders()
-//    {
-//        return $this->hasMany(Orders::className(), ['id' => 'orders_id']);
-//    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCabinet()
+    {
+        return $this->hasOne(Cabinet::className(), ['id' => 'cabinet_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -63,5 +69,4 @@ class Cabinet extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Location::className(), ['id' => 'location_id']);
     }
-
 }

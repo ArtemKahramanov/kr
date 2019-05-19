@@ -4,22 +4,48 @@
 
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
+use \yii\bootstrap\ActiveForm;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
 
-$this->title = 'Заказы борудования';
+$url = \yii\helpers\Url::to(['catalog']);
+
+$this->title = 'Заказ борудования';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-  <h1><?= Html::encode($this->title) ?></h1>
-  <?php echo yii\grid\GridView::widget([
-    'dataProvider' => $provider,
-    'columns' => [
-         ['attribute' => 'id', 'label'=>'Номер'],
-        ['attribute' => 'price_one','label' => 'Цена за единицу', 'value' => function($model){return $model->price_one . ' Руб.';}],
-//        ['attribute' => 'price_all','label' => 'Итого', 'value' => function($model){return $model->price_all . ' Руб.';}],
-         ['attribute' => 'kol','label' => 'Колличество'],
-        ['attribute' => 'catalog_oborudovania_id','label' => 'Каталог оборудования', 'value'=>'catalogOborudovania.name'],
-        ['attribute' => 'organizer_name','label' => 'Организатор', 'value'=>'organizer.name'],
-       ]
-  ]);
-  ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+
+    <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+
+    <?php
+    echo $form->field($model, 'catalog_oborudovania_id')->widget(Select2::classname(), [
+        'initValueText' => 'Выберите оборудование', // set the initial display text
+        'options' => ['placeholder' => 'Поиск ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(city) { return city.text; }'),
+            'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+        ],
+    ]);
+    ?>
+
+    <?= $form->field($model, 'kol')->textInput(['autofocus' => true]) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 </div>

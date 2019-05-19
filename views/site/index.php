@@ -3,7 +3,11 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+//echo '<pre>';
+//var_dump($rows);die;
 ?>
+
+
 <div class="site-index">
 
     <div class="jumbotron">

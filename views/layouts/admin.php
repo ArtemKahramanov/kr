@@ -40,9 +40,15 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => ['/admin']],
             ['label' => 'Организаторы', 'url' => ['/admin/organizer']],
+            ['label' => 'Распложение',
+                'options'=>['class'=>'dropdown'],
+                'template' => '<a href="#">{label}</a>',
+                'items' => [
+                    ['label' => 'Цех', 'url' => ['/admin/location']],
+                    ['label' => 'Кабинеты', 'url' => ['/admin/cabinet']],
+                ]
+            ],
             ['label' => 'Поставщики', 'url' => ['/admin/provider']],
-            ['label' => 'Расположение', 'url' => ['/admin/location']],
-            ['label' => 'Кабинеты', 'url' => ['/admin/cabinet']],
             ['label' => 'Оборудование',
               'options'=>['class'=>'dropdown'],
               'template' => '<a href="#">{label}</a>',
@@ -53,7 +59,15 @@ AppAsset::register($this);
                   ['label' => 'Заказы оборудования', 'url' => ['/admin/orders']],
               ]
             ],
+            ['label' => 'Заказы',
+                'options'=>['class'=>'dropdown'],
+                'template' => '<a href="#">{label}</a>',
+                'items' => [
+                    ['label' => 'Новые заказы', 'url' => ['/admin/new-order']],
+                    ['label' => 'Заказы оборудования', 'url' => ['/admin/orders']],
+                ]
             ],
+        ],
     ]);
     NavBar::end();
     ?>

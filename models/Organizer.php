@@ -30,6 +30,7 @@ class Organizer extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
+            [['date_dismissal'], 'safe'],
         ];
     }
 
@@ -40,7 +41,8 @@ class Organizer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'ФИО',
+            'date_dismissal' => 'Уволен',
         ];
     }
 

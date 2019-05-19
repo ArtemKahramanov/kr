@@ -3,7 +3,10 @@
 namespace app\controllers;
 
 use app\models\Location;
+use app\models\NewOrder;
+use app\models\WriteOff;
 use Yii;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -59,7 +62,17 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $rows = (new \yii\db\Query())
+            ->select(['organizer.name'])
+            ->from('organizer')
+            ->innerJoin('groups', 'groups.organizer_id = organizer.id')
+//            ->where(['organizer.id' => 3])
+//            ->
+            ->all();
+
+        return $this->render('index', [
+            'rows' => $rows,
+        ]);
     }
 
     public function actionLogin()
@@ -108,11 +121,9 @@ class SiteController extends Controller
                 'pageSize' => 7,
             ],
             'sort' => [
-                'defaultOrder'=>[]
+                'defaultOrder' => []
             ],
         ]);
-
-        $query = $query->all();
 
         return $this->render('groups', [
             'provider' => $provider,
@@ -129,7 +140,7 @@ class SiteController extends Controller
                 'pageSize' => 7,
             ],
             'sort' => [
-                'defaultOrder'=>[]
+                'defaultOrder' => []
             ],
         ]);
 
@@ -151,7 +162,7 @@ class SiteController extends Controller
                 'pageSize' => 7,
             ],
             'sort' => [
-                'defaultOrder'=>[]
+                'defaultOrder' => []
             ],
         ]);
 
@@ -172,7 +183,7 @@ class SiteController extends Controller
                 'pageSize' => 7,
             ],
             'sort' => [
-                'defaultOrder'=>[]
+                'defaultOrder' => []
             ],
         ]);
 
@@ -188,40 +199,64 @@ class SiteController extends Controller
     {
         $query = Provider::find();
         $provider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 7,
-          ],
-          'sort' => [
-            'defaultOrder'=>[]
-          ],
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder' => []
+            ],
         ]);
 
         $query = $query->all();
 
         return $this->render('provider', [
-          'provider' => $provider,
-          'query' => $query,
+            'provider' => $provider,
+            'query' => $query,
         ]);
     }
 
     public function actionOrders()
     {
-        $query = orders::find();
+        $model = new NewOrder();
 
-        $provider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 7,
-          ],
-          'sort' => [
-            'defaultOrder'=>[]
-          ],
-        ]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Заказ добавлен!');
+            return $this->refresh();
+        }
 
         return $this->render('orders', [
-          'provider' => $provider,
+            'model' => $model,
         ]);
+    }
+
+    public function actionWriteOff()
+    {
+        $claim = new WriteOff();
+        $oborudovanie = Oborudovanie::find()->joinWith('cabinet')->all();
+        return $this->render('write-off', [
+            'claim' => $claim,
+            'oborudovanie' => $oborudovanie,
+        ]);
+    }
+
+    public function actionCatalog($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query();
+            $query->select('id, name AS text')
+                ->from('catalog_oborudovania')
+                ->where(['like', 'name', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => CatalogOborudovania::find($id)->name];
+        }
+        return $out;
     }
 
     public function actionOrganizer()
@@ -229,17 +264,17 @@ class SiteController extends Controller
         $query = Organizer::find();
 
         $provider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 7,
-          ],
-          'sort' => [
-            'defaultOrder'=>[]
-          ],
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 7,
+            ],
+            'sort' => [
+                'defaultOrder' => []
+            ],
         ]);
 
         return $this->render('organizer', [
-          'provider' => $provider,
+            'provider' => $provider,
         ]);
     }
 }

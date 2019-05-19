@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * OrganizerController implements the CRUD actions for Organizer model.
  */
-class OrganizerController extends Controller
+class OrganizerController extends AdminController
 {
     /**
      * {@inheritdoc}
@@ -93,6 +93,17 @@ class OrganizerController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDismissal($id){
+        $model = Organizer::find()->where(['id' => $id])->one();
+        $now = date('Y-m-d');
+        $model->date_dismissal = $now;
+        if($model->save()) {
+            return $this->redirect('index');
+        }else{
+            var_dump($model->getErrors()); die;
+        }
     }
 
     /**

@@ -41,8 +41,8 @@ class Provider extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'Номер',
+            'name' => 'Название',
         ];
     }
 

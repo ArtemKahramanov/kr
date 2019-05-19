@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * CatalogOborudovaniaController implements the CRUD actions for CatalogOborudovania model.
  */
-class CatalogOborudovaniaController extends Controller
+class CatalogOborudovaniaController extends AdminController
 {
     /**
      * {@inheritdoc}

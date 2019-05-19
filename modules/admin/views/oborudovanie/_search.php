@@ -15,13 +15,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'catalog_oborudovania_id') ?>
+<!--    --><?//= $form->field($model, 'catalog_oborudovania_id') ?>
 
 <!--    --><?//= $form->field($model, 'number') ?>
 
 <!--    --><?//= $form->field($model, 'retired') ?>
 
-    <?= $form->field($model, 'cabinet_id') ?>
+<!--    --><?//= $form->field($model, 'cabinet_id') ?>
 
     <?= $form->field($model, 'retired')->checkbox([
         'template' => '<div class="col-md-1">{label}</div><div class="col-md-5">{input}</div><div class="col-md-6">{error}</div>'
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Очистить', ['class' => 'btn btn-default']) ?>
+<!--        --><?//= Html::resetButton('Очистить', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
