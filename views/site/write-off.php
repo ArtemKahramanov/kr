@@ -17,9 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($claim, 'cabinet_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Cabinet::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($claim, 'name')->textInput(['autofocus' => true]) ?>
-
-    <?= $form->field($claim, 'name')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($claim, 'number')->textInput(['autofocus' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

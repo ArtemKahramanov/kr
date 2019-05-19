@@ -8,7 +8,7 @@ use \yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
-$url = \yii\helpers\Url::to(['catalog']);
+$url = \yii\helpers\Url::to(['/site/catalog']);
 
 $this->title = 'Заказ борудования';
 $this->params['breadcrumbs'][] = $this->title;
@@ -40,6 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+
+    <?= $form->field($model, 'location_id')->dropDownList(
+        \yii\helpers\ArrayHelper::map(\app\models\Location::find()->all(), 'id', 'name'),
+        [
+            'prompt' => 'Выбор Отделения',
+        ]) ?>
+
+
+    <?= $form->field($model, 'cabinet_id') ?>
 
     <?= $form->field($model, 'kol')->textInput(['autofocus' => true]) ?>
 

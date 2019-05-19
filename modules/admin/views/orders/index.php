@@ -13,20 +13,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['attribute' => 'catalog_oborudovania_id', 'label'=>'Название', 'value'=>'catalogOborudovania.name'],
-            'price_one',
+            ['attribute' => 'catalog_oborudovania_id', 'label'=>'Категория', 'value'=>'catalogOborudovania.name'],
+            ['attribute' => 'name', 'label'=>'Сообщение', 'value'=>'name'],
             'kol',
+            'status',
             ['attribute' => 'organizer_id', 'label'=>'Организатор', 'value'=>'organizer.name'],
+            ['attribute' => 'location_id', 'label'=>'Отделение', 'value'=>'location.name'],
+            'cabinet_id',
+            'created_at',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

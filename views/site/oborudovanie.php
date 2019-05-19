@@ -5,19 +5,32 @@
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 
-$this->title = 'Заказы борудования';
+$this->title = 'Оборудование в наличии';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php echo yii\grid\GridView::widget([
-        'dataProvider' => $provider,
-        'columns' => [
-            ['attribute' => 'id', 'label'=>'Номер'],
-            ['attribute' => 'number', 'label'=>'Название'],
-            ['attribute' => 'cabinet_id','label' => 'Каталог оборудования', 'value'=>'cabinet.name'],
-            ['attribute' => 'catalog_oborudovania_id','label' => 'Каталог оборудования', 'value'=>'catalogOborudovania.name'],
-        ]
-    ]);
-    ?>
+    <p>Чтобы проверить наличие оборудования, заолните форму</p>
+    <div class="row">
+        <div class="col-lg-5">
+
+            <?php $form = \yii\widgets\ActiveForm::begin(); ?>
+
+            <?= $form->field($model, 'location')->dropDownList(
+                \yii\helpers\ArrayHelper::map(\app\models\Location::find()->all(), 'id', 'name'),
+                [
+                    'prompt' => 'Выбор Отделения',
+                ]) ?>
+
+
+            <?= $form->field($model, 'cabinet_id') ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('Вперед', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+            </div>
+
+            <?php \yii\widgets\ActiveForm::end(); ?>
+
+        </div>
+    </div>
 </div>

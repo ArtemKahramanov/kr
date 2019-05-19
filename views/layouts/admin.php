@@ -44,11 +44,11 @@ AppAsset::register($this);
                 'options'=>['class'=>'dropdown'],
                 'template' => '<a href="#">{label}</a>',
                 'items' => [
-                    ['label' => 'Цех', 'url' => ['/admin/location']],
+                    ['label' => 'Отделение', 'url' => ['/admin/location']],
                     ['label' => 'Кабинеты', 'url' => ['/admin/cabinet']],
                 ]
             ],
-            ['label' => 'Поставщики', 'url' => ['/admin/provider']],
+//            ['label' => 'Поставщики', 'url' => ['/admin/provider']],
             ['label' => 'Оборудование',
               'options'=>['class'=>'dropdown'],
               'template' => '<a href="#">{label}</a>',
@@ -56,15 +56,14 @@ AppAsset::register($this);
                   ['label' => 'Каталог оборудования', 'url' => ['/admin/catalog-oborudovania']],
                   ['label' => 'Оборудование в наличии', 'url' => ['/admin/oborudovanie']],
                   ['label' => 'Списанное оборудование', 'url' => ['/admin/oborudovanie', 'OborudovanieSearch[status]'=>'off']],
-                  ['label' => 'Заказы оборудования', 'url' => ['/admin/orders']],
               ]
             ],
-            ['label' => 'Заказы',
+            ['label' => 'Заявки',
                 'options'=>['class'=>'dropdown'],
                 'template' => '<a href="#">{label}</a>',
                 'items' => [
-                    ['label' => 'Новые заказы', 'url' => ['/admin/new-order']],
-                    ['label' => 'Заказы оборудования', 'url' => ['/admin/orders']],
+                    ['label' => 'Заказы', 'url' => ['/admin/orders']],
+                    ['label' => 'Заявки на списание', 'url' => ['/admin/write-off']],
                 ]
             ],
         ],

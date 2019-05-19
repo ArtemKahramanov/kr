@@ -3,19 +3,16 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\Oborudovanie;
-use app\models\OborudovanieSearch;
-use yii\db\Query;
-use app\models\Cabinet;
-use app\models\CatalogOborudovania;
+use app\models\WriteOff;
+use app\models\WriteOffSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OborudovanieController implements the CRUD actions for Oborudovanie model.
+ * WriteOffController implements the CRUD actions for WriteOff model.
  */
-class OborudovanieController extends AdminController
+class WriteOffController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,13 +30,14 @@ class OborudovanieController extends AdminController
     }
 
     /**
-     * Lists all Oborudovanie models.
+     * Lists all WriteOff models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OborudovanieSearch();
+        $searchModel = new WriteOffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -47,7 +45,7 @@ class OborudovanieController extends AdminController
     }
 
     /**
-     * Displays a single Oborudovanie model.
+     * Displays a single WriteOff model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,13 +58,13 @@ class OborudovanieController extends AdminController
     }
 
     /**
-     * Creates a new Oborudovanie model.
+     * Creates a new WriteOff model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Oborudovanie();
+        $model = new WriteOff();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,7 +76,7 @@ class OborudovanieController extends AdminController
     }
 
     /**
-     * Updates an existing Oborudovanie model.
+     * Updates an existing WriteOff model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,20 +95,8 @@ class OborudovanieController extends AdminController
         ]);
     }
 
-    public function actionWriteOff($id){
-        $model = Oborudovanie::find()->where(['id' => $id])->one();
-        $date = date('Y-m-d');
-        $model->retired = $date;
-        if($model->save()) {
-            Yii::$app->session->setFlash('Оборудование списанно');
-            return $this->redirect('index');
-        }else{
-            var_dump($model->getErrors()); die;
-        }
-    }
-
     /**
-     * Deletes an existing Oborudovanie model.
+     * Deletes an existing WriteOff model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -123,54 +109,16 @@ class OborudovanieController extends AdminController
         return $this->redirect(['index']);
     }
 
-    public function actionCatalog($q = null, $id = null) {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $out = ['results' => ['id' => '', 'text' => '']];
-        if (!is_null($q)) {
-            $query = new Query();
-            $query->select('id, name AS text')
-                ->from('catalog_oborudovania')
-                ->where(['like', 'name', $q])
-                ->limit(20);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        }
-        elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => CatalogOborudovania::find($id)->name];
-        }
-        return $out;
-    }
-
-    public function actionCabinet($q = null, $id = null) {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $out = ['results' => ['id' => '', 'text' => '']];
-        if (!is_null($q)) {
-            $query = new Query();
-            $query->select('id, name AS text')
-                ->from('cabinet')
-                ->where(['like', 'name', $q])
-                ->limit(20);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        }
-        elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => Cabinet::find($id)->name];
-        }
-        return $out;
-    }
-
     /**
-     * Finds the Oborudovanie model based on its primary key value.
+     * Finds the WriteOff model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Oborudovanie the loaded model
+     * @return WriteOff the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Oborudovanie::findOne($id)) !== null) {
+        if (($model = WriteOff::findOne($id)) !== null) {
             return $model;
         }
 

@@ -28,8 +28,10 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['catalog_oborudovania_id', 'price_one', 'kol', 'organizer_id'], 'required'],
-            [['catalog_oborudovania_id', 'price_one', 'kol', 'organizer_id'], 'integer'],
+            [['name', 'catalog_oborudovania_id', 'cabinet_id', 'location_id'], 'required'],
+            [['name'], 'string', 'min' => 3],
+            [['catalog_oborudovania_id', 'price_one', 'kol', 'organizer_id', 'cabinet_id', 'location_id'], 'integer'],
+            [['created_at', 'status'], 'safe']
         ];
     }
 
@@ -44,16 +46,26 @@ class Orders extends \yii\db\ActiveRecord
             'catalog_oborudovania_id' => 'Каталог оборудования',
             'price_one' => 'Цена за единицу',
             'kol' => 'Кол-во',
+            'status' => 'Статус',
             'organizer_id' => 'Организатор',
-            'price_all' => 'Итого'
+            'cabinet_id' => 'Кабинет',
+            'location_id' => 'Отделаение',
+            'price_all' => 'Итого',
+            'created_at' => 'Дата добавления',
         ];
     }
     public function getCatalogOborudovania()
     {
         return $this->hasOne(CatalogOborudovania::className(), ['id' => 'catalog_oborudovania_id']);
     }
+
     public function getOrganizer()
     {
         return $this->hasOne(Organizer::className(), ['id' => 'organizer_id']);
+    }
+
+    public function getLocation()
+    {
+        return $this->hasOne(Location::className(), ['id' => 'location_id']);
     }
 }

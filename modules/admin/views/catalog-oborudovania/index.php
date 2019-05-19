@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['attribute' => 'groups_id', 'label'=>'Группа', 'value'=>'groups.name'],
+//            ['attribute' => 'groups_id', 'label'=>'Группа', 'value'=>'groups.name'],
 
             'name',
 

@@ -27,7 +27,7 @@ class FillController extends AdminController
             $count = 15;
             for ($i = 0; $i <= $count; $i++) {
                 $loc = new Location;
-                $loc->name = "Цех " . $i;
+                $loc->name = "Отделение " . $i;
                 if (!$loc->save()) {
                     throw new HttpException(500, 'error');
                 }

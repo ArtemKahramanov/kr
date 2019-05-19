@@ -9,7 +9,7 @@ use yii\grid\GridView;
 $buttons = ['class' => 'yii\grid\ActionColumn',
     'template' => '{view} {update}',
     ];
-$this->title = 'Цехи';
+$this->title = 'Отделения';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="location-index">

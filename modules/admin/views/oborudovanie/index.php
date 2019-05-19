@@ -25,6 +25,9 @@ $column = [
     ['attribute' => 'cabinet_id', 'label' => 'Кабинет', 'value' => 'cabinet.name',
         'filter' => ArrayHelper::map(Cabinet::find()->all(), 'id', 'name')
     ],
+    ['attribute' => 'location_id', 'label' => 'Отделение', 'value' => 'location.name',
+        'filter' => ArrayHelper::map(\app\models\Location::find()->all(), 'id', 'name')
+    ],
 ];
 $life = [
     ['attribute' => 'life', 'label' => 'Срок службы', 'value' => 'catalogOborudovania.life'],
@@ -58,9 +61,10 @@ if ($searchModel->status == 'off') {
     array_splice($column, 2, 0, $retired);
     $this->title = 'Списанное борудование';
 } else {
-    array_splice($column, 3, 0, 'start_operation');
-    array_splice($column, 5, 0, 'date_end');
-    array_splice($column, 4, 0, $life);
+    array_splice($column, 4, 0, 'start_operation');
+    array_splice($column, 3, 0, 'name');
+    array_splice($column, 6, 0, 'date_end');
+    array_splice($column, 5, 0, $life);
     array_push($column, $write_off);
     $this->title = 'Оборудование в наличии';
 }

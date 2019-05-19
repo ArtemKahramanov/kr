@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\forms\OborudovanieForm;
+use app\models\CatalogOborudovania;
 use app\models\Location;
 use app\models\NewOrder;
+use app\models\Orders;
 use app\models\WriteOff;
 use Yii;
 use yii\db\Query;
@@ -14,11 +17,13 @@ use yii\data\ActiveDataProvider;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Oborudovanie;
-use app\models\Orders;
 use app\models\Organizer;
 use app\models\Provider;
 use app\models\Cabinet;
 use app\models\Groups;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 
 class SiteController extends Controller
@@ -133,25 +138,14 @@ class SiteController extends Controller
 
     public function actionOborudovanie()
     {
-        $query = Oborudovanie::find();
-        $provider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 7,
-            ],
-            'sort' => [
-                'defaultOrder' => []
-            ],
-        ]);
-
-        $query = $query->all();
-
+        $model = new OborudovanieForm();
+        if($model->load(Yii::$app->request->post())) {
+            return Yii::$app->response->redirect(['/oborudovanie/index', 'cabinet' => $model->cabinet_id, 'location' => $model->location]);
+        }
         return $this->render('oborudovanie', [
-            'provider' => $provider,
-            'query' => $query,
+            'model' => $model,
         ]);
     }
-
 
     public function actionLocation()
     {
@@ -218,7 +212,7 @@ class SiteController extends Controller
 
     public function actionOrders()
     {
-        $model = new NewOrder();
+        $model = new Orders();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Заказ добавлен!');
@@ -233,6 +227,16 @@ class SiteController extends Controller
     public function actionWriteOff()
     {
         $claim = new WriteOff();
+        if ($claim->load(Yii::$app->request->post())){
+            $oborudovanie = Oborudovanie::find()->where(['number' => $claim->number])->one();
+            if(!$oborudovanie){
+                throw new NotFoundHttpException('Оборудование не найдено');
+            }
+            $claim->oborudovanie_id = $oborudovanie->id;
+            $claim->save();
+            Yii::$app->session->setFlash('success', 'Заявка отправленна');
+            return $this->refresh();
+        }
         $oborudovanie = Oborudovanie::find()->joinWith('cabinet')->all();
         return $this->render('write-off', [
             'claim' => $claim,
